@@ -26,16 +26,6 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.routingkey}")
     private String routingkey;
 
-    @Value("${spring.rabbitmq.username}")
-    private String username;
-
-    @Value("${spring.rabbitmq.password}")
-    private String password;
-
-    @Value("${spring.rabbitmq.host}")
-    private String hostname;
-
-
     @Bean
     Queue queue() {
         return new Queue(queueName, false);

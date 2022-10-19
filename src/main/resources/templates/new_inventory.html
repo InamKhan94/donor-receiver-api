@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Inventory Management System</title>
+    <link crossorigin="anonymous"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>MediShare System</h1>
+    <hr>
+
+    <form action="#" method="POST" th:action="@{/create-donor-receiver}"
+          th:object="${donorReceiverDTO}">
+        <input class="form-control mb-4 col-4" placeholder="Person Name"
+               th:field="*{personName}" type="text">
+        <input class="form-control mb-4 col-4" placeholder="Address"
+               th:field="*{address}" type="text">
+<!--        <input class="form-control mb-4 col-4" placeholder="Person Type"-->
+<!--               th:field="*{personType}" type="text">-->
+        <td>Person Type</td>
+        <select name="Person Type" th:field="*{personType}">
+            <option th:each="personType : ${T(com.example.donorreceiverapi.contants.PersonType).values()}"
+                    th:value="${personType}" th:text="${personType}"></option>
+        </select>
+        <input class="form-control mb-4 col-4" placeholder="Medicine Name"
+               th:field="*{medicineInfo.medicineName}" type="text">
+        <input class="form-control mb-4 col-4" placeholder="Medicine Formula"
+               th:field="*{medicineInfo.medicineFormula}" type="text">
+        <input class="form-control mb-4 col-4" placeholder="Quantity"
+               th:field="*{medicineInfo.quantity}" type="text">
+        <td>Expiry Date</td>
+        <input class="form-control mb-4 col-4" th:field="*{medicineInfo.expiryDate}" type="date">
+<!--        <input class="form-control mb-4 col-4" placeholder="Shipping Method"-->
+<!--               th:field="*{medicineInfo.shippingMethod}" type="text">-->
+        <td>Shipping Method</td>
+        <select name="Shipping Method" th:field="*{medicineInfo.shippingMethod}">
+            <option th:each="medicineInfo : ${T(com.example.donorreceiverapi.contants.ShippingMethod).values()}"
+                    th:value="${medicineInfo}" th:text="${medicineInfo}"></option>
+        </select>
+        <br>
+        <td>Shipping Date</td>
+        <input class="form-control mb-4 col-4" th:field="*{medicineInfo.shippingDate}" type="date">
+
+        <button class="btn btn-info col-2" type="submit">Save Donor/Receiver</button>
+    </form>
+
+
+<!--    private String medicineName;-->
+<!--    private String medicineFormula;-->
+<!--    private Integer quantity;-->
+<!--    private Date expiryDate;-->
+<!--    private ShippingMethod shippingMethod;-->
+<!--    private Date shippingDate;-->
+
+    <hr>
+
+    <a th:href="@{/}"> Back to Inventory List</a>
+</div>
+</body>
+</html>

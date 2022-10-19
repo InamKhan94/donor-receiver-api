@@ -4,6 +4,7 @@ import com.example.donorreceiverapi.dto.DonorReceiverDTO;
 import com.example.donorreceiverapi.repository.DonorReceiverRepository;
 import com.example.donorreceiverapi.service.DonorReceiverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController
+@Controller
 public class DonorReceiveController {
 
     @Autowired
@@ -25,13 +26,13 @@ public class DonorReceiveController {
     @PostMapping(value = "/create-donor-receiver")
     //,@RequestParam(value="Prescription", required = false) MultipartFile prescription
    // @ModelAttribute("donorReceiverDTO")
-    public String createDonorReceiver(@RequestBody DonorReceiverDTO donorReceiverDTO) {
+    public String createDonorReceiver(@ModelAttribute("donorReceiverDTO") DonorReceiverDTO donorReceiverDTO) {
         donorReceiverService.createDonorReceiver(donorReceiverDTO);
         return "redirect:/";
     }
     @GetMapping("/")
     public String viewHomePage(Model model) {
-        model.addAttribute("donorReceiverList", donorReceiverRepository.findAll());
+      //  model.addAttribute("donorReceiverList", donorReceiverRepository.findAll());
         return "index";
     }
 
