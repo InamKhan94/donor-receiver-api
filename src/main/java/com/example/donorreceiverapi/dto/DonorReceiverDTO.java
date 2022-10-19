@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DonorReceiverDTO {
+public class DonorReceiverDTO{
 
     private Long id;
     private String personName;

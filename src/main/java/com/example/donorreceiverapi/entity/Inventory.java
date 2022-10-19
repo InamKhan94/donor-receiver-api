@@ -42,4 +42,5 @@ public class Inventory {
     private DonorReceiver donorReceiver;
     @Column(name = "image", unique = false)
     private byte[] prescription;
+    private String status;
 }

@@ -6,7 +6,6 @@ import com.example.donorreceiverapi.entity.DonorReceiver;
 import com.example.donorreceiverapi.event.DonorReceiverCreationEvent;
 import com.example.donorreceiverapi.repository.DonorReceiverRepository;
 import com.example.donorreceiverapi.util.ImageUtility;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,14 +17,15 @@ public class DonorReceiverService {
 
     @Autowired
     private DonorReceiverRepository donorReceiverRepository;
-    private ModelMapper modelMapper;
+    @Autowired
+    RabbitMQSender rabbitMQSender;
+//, MultipartFile prescription
+    public DonorReceiverDTO createDonorReceiver(DonorReceiverDTO donorReceiverDTO){
 
-    public DonorReceiverDTO createDonorReceiver(DonorReceiverDTO donorReceiverDTO, MultipartFile prescription){
-
-       // DonorReceiver donorReceiver = modelMapper.map(donorReceiverDTO, DonorReceiver.class);
+        DonorReceiverCreationEvent donorReceiverCreationEvent = new DonorReceiverCreationEvent();
 //        try {
-//            if(!prescription.isEmpty()) {
-//                donorReceiver.setPrescription(ImageUtility.compressImage(prescription.getBytes()));
+//            if(prescription != null) {
+//                 donorReceiverCreationEvent.setPrescription(ImageUtility.compressImage(prescription.getBytes()));
 //            }
 //
 //        } catch (IOException e) {
@@ -33,16 +33,17 @@ public class DonorReceiverService {
 //        }
         DonorReceiver donorReceiver = DonorReceiver.builder()
                                                     .id(donorReceiverDTO.getId())
+                                                    .personName(donorReceiverDTO.getPersonName())
                                                     .address(donorReceiverDTO.getAddress())
                                                     .personType(donorReceiverDTO.getPersonType())
                                                     .build();
         donorReceiver = donorReceiverRepository.save(donorReceiver);
         donorReceiverDTO.setId(donorReceiver.getId());
-        DonorReceiverCreationEvent donorReceiverCreationEvent = DonorReceiverCreationEvent.builder()
+        donorReceiverCreationEvent = DonorReceiverCreationEvent.builder()
                 .personId(donorReceiverDTO.getId()).medicineInfo(donorReceiverDTO.getMedicineInfo())
-                .(ImageUtility.compressImage(prescription.getBytes()))
                 .build();
 
+        rabbitMQSender.send(donorReceiverCreationEvent);
         return donorReceiverDTO;
 
     }

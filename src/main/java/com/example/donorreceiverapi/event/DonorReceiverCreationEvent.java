@@ -17,4 +17,5 @@ import java.util.List;
 public class DonorReceiverCreationEvent {
     private Long personId;
     private List<MedicineInfo> medicineInfo;
+    private byte[] prescription;
 }
