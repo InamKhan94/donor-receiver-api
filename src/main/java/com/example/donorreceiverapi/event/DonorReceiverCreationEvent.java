@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 public class DonorReceiverCreationEvent {
     private Long personId;
+    private String email;
     private MedicineInfo medicineInfo;
     private byte[] prescription;
 }

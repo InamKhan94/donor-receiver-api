@@ -1,5 +1,6 @@
 package com.example.donorreceiverapi.dto;
 
+import com.example.donorreceiverapi.contants.InventoryStatus;
 import com.example.donorreceiverapi.contants.ShippingMethod;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,5 @@ public class MedicineInfo {
     private ShippingMethod shippingMethod;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date shippingDate;
+    private InventoryStatus inventoryStatus;
 }

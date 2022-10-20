@@ -1,6 +1,7 @@
 package com.example.donorreceiverapi.service;
 
 
+import com.example.donorreceiverapi.contants.InventoryStatus;
 import com.example.donorreceiverapi.dto.DonorReceiverDTO;
 import com.example.donorreceiverapi.entity.DonorReceiver;
 import com.example.donorreceiverapi.event.DonorReceiverCreationEvent;
@@ -36,11 +37,14 @@ public class DonorReceiverService {
                                                     .personName(donorReceiverDTO.getPersonName())
                                                     .address(donorReceiverDTO.getAddress())
                                                     .personType(donorReceiverDTO.getPersonType())
+                                                    .email(donorReceiverDTO.getEmail())
                                                     .build();
+        donorReceiverDTO.getMedicineInfo().setInventoryStatus(InventoryStatus.PENDING);
         donorReceiver = donorReceiverRepository.save(donorReceiver);
         donorReceiverDTO.setId(donorReceiver.getId());
         donorReceiverCreationEvent = DonorReceiverCreationEvent.builder()
                 .personId(donorReceiverDTO.getId()).medicineInfo(donorReceiverDTO.getMedicineInfo())
+                .email(donorReceiverDTO.getEmail())
                 .build();
 
         rabbitMQSender.send(donorReceiverCreationEvent);

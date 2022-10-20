@@ -33,6 +33,7 @@ public class DonorReceiver {
     private Long id;
     private String personName;
     private String address;
+    private String email;
     private PersonType personType;
     @OneToMany(mappedBy="donorReceiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Inventory> inventoryList;

@@ -1,5 +1,6 @@
 package com.example.donorreceiverapi.entity;
 
+import com.example.donorreceiverapi.contants.InventoryStatus;
 import com.example.donorreceiverapi.contants.ShippingMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,5 +43,5 @@ public class Inventory {
     private DonorReceiver donorReceiver;
     @Column(name = "image", unique = false)
     private byte[] prescription;
-    private String status;
+    private InventoryStatus status;
 }

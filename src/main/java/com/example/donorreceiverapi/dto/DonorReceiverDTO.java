@@ -24,6 +24,7 @@ public class DonorReceiverDTO implements Serializable {
     private String personName;
     private String address;
     private PersonType personType;
+    private String email;
     private MedicineInfo medicineInfo;
 
     public String getMedicineName() {
